@@ -52,7 +52,7 @@ export const dict: Record<Lang, Dictionary> = {
       linkedin: { label: "linkedin", sub: "professional profile" },
       credly: { label: "credly", sub: "certificates & achievements" },
       github: { label: "github", sub: "personal & student projects" },
-      cv: { label: "cv", sub: "overview pdf" },
+      cv: { label: "CV", sub: "overview pdf" },
     },
     resources: { source: "source", privacy: "privacy", contact: "contact" },
     marquee:
@@ -67,7 +67,7 @@ export const dict: Record<Lang, Dictionary> = {
       linkedin: { label: "linkedin", sub: "berufliches profil" },
       credly: { label: "credly", sub: "zertifikate & erfolge" },
       github: { label: "github", sub: "eigene & studentische Projekte" },
-      cv: { label: "cv", sub: "pdf-vorschau" },
+      cv: { label: "CV", sub: "pdf-vorschau" },
     },
     resources: {
       source: "quellcode",
