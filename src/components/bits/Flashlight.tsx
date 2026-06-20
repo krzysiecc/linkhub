@@ -1,9 +1,9 @@
 import { useEffect, useState } from "react";
 import { motion, useMotionValue, useMotionTemplate, useSpring } from "framer-motion";
 
-// Latarka pod klawiszem "L": przyciemnia caly ekran poza nieregularnym,
-// "oddychajacym" snopem swiatla podazajacym za kursorem.
-// Nieregularnosc i animacje krawedzi daje filtr SVG (feTurbulence + feDisplacementMap).
+// flashlight under the "L" key: dims the whole screen except an irregular,
+// "breathing" beam of light that follows the cursor.
+// the irregularity and edge animation come from an SVG filter (feTurbulence + feDisplacementMap).
 const REDUCE =
   typeof window !== "undefined" &&
   window.matchMedia("(prefers-reduced-motion: reduce)").matches;
@@ -19,10 +19,10 @@ export default function Flashlight() {
   const sy = useSpring(my, { stiffness: 350, damping: 30, mass: 0.4 });
   const radius = useMotionValue(170);
 
-  // Srodek maski przezroczysty (dziura -> widac tresc), brzeg czarny (overlay zostaje ciemny).
+  // mask center is transparent (a hole -> content shows through), edge is black (overlay stays dark).
   const mask = useMotionTemplate`radial-gradient(circle ${radius}px at ${sx}px ${sy}px, transparent 0%, transparent 38%, rgba(0,0,0,0.75) 62%, #000 100%)`;
 
-  // Przelacznik pod klawiszem L (ignoruj pola tekstowe)
+  // toggle under the L key (ignore text fields)
   useEffect(() => {
     const onKey = (e: KeyboardEvent) => {
       if (e.key !== "l" && e.key !== "L") return;
@@ -35,7 +35,7 @@ export default function Flashlight() {
     return () => window.removeEventListener("keydown", onKey);
   }, []);
 
-  // Sledzenie kursora + dynamiczna ekspozycja (tylko gdy wlaczona)
+  // cursor tracking + dynamic exposure (only when on)
   useEffect(() => {
     if (!on) return;
 
@@ -55,7 +55,7 @@ export default function Flashlight() {
     const tick = (ts: number) => {
       if (startTs == null) startTs = ts;
       const s = (ts - startTs) / 1000;
-      // oddech (wolny) + flicker (szybki)
+      // breath (slow) + flicker (fast)
       radius.set(165 + Math.sin(s * 1.6) * 22 + Math.sin(s * 9) * 6);
       raf = requestAnimationFrame(tick);
     };

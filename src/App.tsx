@@ -1,9 +1,9 @@
-import Background from "./components/Background";
-import Noise from "./components/Noise";
-import Flashlight from "./components/Flashlight";
+import Background from "./components/bits/Background";
+import Noise from "./components/bits/Noise";
+import Flashlight from "./components/bits/Flashlight";
 import TorchHint from "./components/TorchHint";
-import Parallax from "./components/Parallax";
-import ClickBlur from "./components/ClickBlur";
+import Parallax from "./components/bits/Parallax";
+import ClickBlur from "./components/bits/ClickBlur";
 import LinkCard from "./components/LinkCard";
 // import Marquee from "./components/Marquee";
 import ResourceLinks from "./components/ResourceLinks";
@@ -18,9 +18,14 @@ export default function App() {
 
   return (
     <ClickBlur>
-      {/* Tlo (Three.js) i latarka tylko na desktopie; grain zawsze. */}
-      {!isMobile && <Background />}
-      <Noise patternAlpha={75} patternRefreshInterval={5} />
+      {/* background (Three.js): full on desktop, lightweight on mobile.
+          flashlight desktop-only; grain always. */}
+      {isMobile ? (
+        <Background count={350} pixelRatioCap={1.5} interactive={false} />
+      ) : (
+        <Background />
+      )}
+      <Noise patternAlpha={75} patternRefreshInterval={isMobile ? 12 : 5} />
       {!isMobile && <Flashlight />}
       {!isMobile && <TorchHint />}
 
@@ -46,9 +51,9 @@ export default function App() {
         </Parallax>
 
         <footer className="relative left-1/2 mt-auto w-[min(700px,92vw)] -translate-x-1/2 pt-7 text-center">
-          <div className="mb-5.5 flex items-start gap-10.5 text-left max-[560px]:flex-col max-[560px]:gap-4">
+          <div className="mb-5.5 flex items-start gap-10.5 text-left max-[560px]:gap-4">
             <ResourceLinks />
-            <div className="ml-auto text-right max-[560px]:ml-0 max-[560px]:text-left">
+            <div className="ml-auto text-right">
               <LangSwitcher />
             </div>
           </div>

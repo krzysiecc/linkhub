@@ -1,14 +1,14 @@
 import { Fragment, useEffect, useRef, useState } from "react";
 import { useI18n } from "../i18n";
 import { LANGS, NATIVE_NAME, type Lang } from "../i18n/dictionary";
-import DecryptedText from "./DecryptedText";
+import DecryptedText from "./bits/DecryptedText";
 
 const REDUCE =
   typeof window !== "undefined" &&
   window.matchMedia("(prefers-reduced-motion: reduce)").matches;
 
-// Dropdown jezyka: nad triggerem wysuwa sie poziomy div
-// "polski | english | deutsch", a kazda nazwa "odszyfrowuje sie" (DecryptedText).
+// language dropdown: a horizontal div slides out above the trigger -
+// "polski | english | deutsch", and each name "decrypts" itself (DecryptedText).
 export default function LangSwitcher() {
   const { lang, setLang } = useI18n();
   const [open, setOpen] = useState(false);
@@ -25,7 +25,7 @@ export default function LangSwitcher() {
     close();
   };
 
-  // Finalizacja zamkniecia po animacji (lub od razu przy reduce-motion)
+  // finalize closing after the animation (or immediately with reduce-motion)
   useEffect(() => {
     if (!closing) return;
     const id = setTimeout(
@@ -38,7 +38,7 @@ export default function LangSwitcher() {
     return () => clearTimeout(id);
   }, [closing]);
 
-  // Zamykanie klikiem poza menu / klawiszem Escape
+  // close on click outside the menu / Escape key
   useEffect(() => {
     if (!open) return;
     const onDoc = (e: MouseEvent) => {

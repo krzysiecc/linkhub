@@ -1,24 +1,25 @@
 import { useI18n } from "../i18n";
-import { links } from "../data/links";
+import { links, resolveHref } from "../data/links";
 
-// TODO: uzupelnic realne URL-e dla source/privacy.
 interface MetaLink {
   id: string;
   href: string;
 }
 
 const META: MetaLink[] = [
-  { id: "source", href: "#" },
-  { id: "privacy", href: "#" },
+  { id: "source", href: "https://github.com/krzysiecc/linkhub/tree/main" },
+  { id: "privacy", href: "privacy/" },
   { id: "contact", href: "mailto:kris.wilnicki@gmail.com" },
 ];
 
+// external = absolute http(s) -> open in a new tab. internal pages (privacy/)
+// and mailto: stay in the same tab.
 function isExternal(href: string): boolean {
-  return href !== "#" && !href.startsWith("mailto:");
+  return href.startsWith("http");
 }
 
 export default function ResourceLinks() {
-  const { t } = useI18n();
+  const { t, lang } = useI18n();
   const linkCls =
     "whitespace-nowrap font-body text-[18px] text-muted no-underline transition-colors hover:text-accent-2 focus-visible:text-accent-2";
 
@@ -26,12 +27,13 @@ export default function ResourceLinks() {
     <>
       <nav className="flex flex-col gap-1.75" aria-label="profiles">
         {links.map((l) => {
-          const ext = isExternal(l.href);
+          const href = resolveHref(l.href, lang);
+          const ext = isExternal(href);
           return (
             <a
               key={l.id}
               className={linkCls}
-              href={l.href}
+              href={href}
               target={ext ? "_blank" : undefined}
               rel={ext ? "noopener noreferrer" : undefined}
             >

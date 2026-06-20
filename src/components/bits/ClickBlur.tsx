@@ -1,7 +1,7 @@
 import { useRef, type MouseEvent, type ReactNode } from "react";
 
-// Klikniecie rozmazuje fragment ekranu w miejscu kursora
-// (backdrop-filter), ktory po chwili zanika.
+// a click blurs a patch of the screen at the cursor
+// (backdrop-filter), which fades after a moment.
 const SPOT_SIZE = 16;
 
 interface ClickBlurProps {

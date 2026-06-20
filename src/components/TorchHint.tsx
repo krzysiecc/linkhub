@@ -1,6 +1,6 @@
 import { useI18n } from "../i18n";
 
-// Podpowiedz w lewym dolnym rogu: jak wlaczyc latarke.
+// hint in the bottom-left corner: how to turn on the flashlight.
 export default function TorchHint() {
   const { t } = useI18n();
   return (

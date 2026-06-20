@@ -1,8 +1,20 @@
 import { useEffect, useRef } from "react";
 import * as THREE from "three";
 
-// Lekkie, animowane tlo z czastek (Three.js). Delikatny parallax od myszy.
-export default function Background() {
+interface BackgroundProps {
+  // total particle count across all layers (lower = lighter on weak GPUs)
+  count?: number;
+  // upper bound for devicePixelRatio (lower = much less fill work on retina phones)
+  pixelRatioCap?: number;
+  // pointer-driven camera parallax; pointless on touch, so off on mobile
+  interactive?: boolean;
+}
+
+export default function Background({
+  count = 1000,
+  pixelRatioCap = 2,
+  interactive = true,
+}: BackgroundProps) {
   const ref = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
@@ -21,7 +33,7 @@ export default function Background() {
 
     const renderer = new THREE.WebGLRenderer({ antialias: true, alpha: false });
     renderer.setSize(container.clientWidth, container.clientHeight);
-    renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+    renderer.setPixelRatio(Math.min(window.devicePixelRatio, pixelRatioCap));
     renderer.setClearColor(0x000000, 1);
     container.appendChild(renderer.domElement);
 
@@ -76,7 +88,7 @@ export default function Background() {
       return texture;
     };
 
-    const COUNT = 1000;
+    const COUNT = count;
     const SHAPES = ["circle", "diamond", "star"];
     const particleLayers: THREE.Points[] = [];
 
@@ -107,7 +119,10 @@ export default function Background() {
       }
 
       const geometry = new THREE.BufferGeometry();
-      geometry.setAttribute("position", new THREE.BufferAttribute(positions, 3));
+      geometry.setAttribute(
+        "position",
+        new THREE.BufferAttribute(positions, 3),
+      );
       geometry.setAttribute("color", new THREE.BufferAttribute(colors, 3));
 
       const material = new THREE.PointsMaterial({
@@ -133,9 +148,11 @@ export default function Background() {
       mouseX = e.clientX / window.innerWidth - 0.5;
       mouseY = e.clientY / window.innerHeight - 0.5;
     };
-    window.addEventListener("pointermove", onMove);
+    if (interactive) window.addEventListener("pointermove", onMove);
 
-    const reduce = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+    const reduce = window.matchMedia(
+      "(prefers-reduced-motion: reduce)",
+    ).matches;
     const clock = new THREE.Clock();
     let raf = 0;
 
@@ -158,7 +175,7 @@ export default function Background() {
     };
 
     if (reduce) {
-      renderFrame(); // pojedyncza klatka, bez animacji
+      renderFrame();
     } else {
       animate();
     }
@@ -172,7 +189,7 @@ export default function Background() {
 
     return () => {
       cancelAnimationFrame(raf);
-      window.removeEventListener("pointermove", onMove);
+      if (interactive) window.removeEventListener("pointermove", onMove);
       window.removeEventListener("resize", onResize);
       particleLayers.forEach((layer) => {
         layer.geometry.dispose();
@@ -185,7 +202,7 @@ export default function Background() {
         renderer.domElement.parentNode.removeChild(renderer.domElement);
       }
     };
-  }, []);
+  }, [count, pixelRatioCap, interactive]);
 
   return <div ref={ref} className="fixed inset-0 z-0" aria-hidden="true" />;
 }

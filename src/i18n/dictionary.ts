@@ -1,5 +1,5 @@
-// Slownik i18n. Dane techniczne linkow (href/icon) zostaja w data/links.ts,
-// tutaj sa tylko teksty zalezne od jezyka, kluczowane po id linku.
+// i18n dictionary. technical link data (href/icon) stays in data/links.ts;
+// here are only the language-dependent texts, keyed by link id.
 export const LANGS = ["pl", "en", "de"] as const;
 export type Lang = (typeof LANGS)[number];
 export const DEFAULT_LANG: Lang = "pl";

@@ -1,6 +1,5 @@
 import { useEffect, useState } from "react";
 
-// "Mobile" = waski ekran lub dotykowe urzadzenie (brak myszy/klawiatury).
 const QUERY = "(max-width: 768px), (pointer: coarse)";
 
 export function useIsMobile(): boolean {

@@ -1,8 +1,8 @@
 @import "tailwindcss";
 
-/* ---- Tokeny designu (Tailwind v4 @theme -> zmienne + utilities) ---- */
+/* ---- design tokens (Tailwind v4 @theme -> variables + utilities) ---- */
 @theme {
-  /* Paleta (ciemna): Aqua + Caramel + Red */
+  /* palette (dark): Aqua + Caramel + Red */
   --color-bg-ink: #001219;
   --color-bg-ink-2: #00171f;
   --color-text: #94d2bd;
@@ -25,7 +25,7 @@
   --ease-bounce: cubic-bezier(0.34, 1.56, 0.64, 1);
 }
 
-/* ---- Lokalne fonty (folder src/fonts) ---- */
+/* ---- local fonts (src/fonts folder) ---- */
 @font-face {
   font-family: "Helvetica";
   src: url("./fonts/helvetica/Helvetica-Regular.ttf") format("truetype");
@@ -88,7 +88,7 @@
       );
     -webkit-font-smoothing: antialiased;
     overflow-x: hidden;
-    /* Bez zaznaczania tekstu */
+    /* no text selection */
     -webkit-user-select: none;
     -moz-user-select: none;
     user-select: none;
@@ -96,9 +96,9 @@
   }
 }
 
-/* ---- Komponenty/efekty, ktorych nie da sie wyrazic utilitami ---- */
+/* ---- components/effects that can't be expressed with utilities ---- */
 @layer components {
-  /* Nazwa: gradient + animowany polysk */
+  /* name: gradient + animated shine */
   .name-grad {
     background: linear-gradient(
       100deg,
@@ -115,7 +115,7 @@
     animation: shine 6s linear infinite;
   }
 
-  /* Karta linku: domyslnie sama etykieta; na hover/focus wjezdza ikonka i opis */
+  /* link card: by default just the label; on hover/focus the icon and description slide in */
   .link {
     position: relative;
     display: flex;
@@ -238,7 +238,7 @@
     outline-offset: 3px;
   }
 
-  /* Marquee */
+  /* marquee */
   .marquee {
     overflow: hidden;
     width: 100%;
@@ -275,7 +275,7 @@
     color: var(--color-accent);
   }
 
-  /* Przelacznik jezyka: dropdown otwierany w DOL */
+  /* language switcher: dropdown that opens downward */
   .lang-dd {
     position: relative;
     display: inline-block;
@@ -370,7 +370,7 @@
     border-radius: 3px;
   }
 
-  /* Punktowe rozmycie po kliknieciu (element tworzony w JS) */
+  /* pointer blur after a click (element created in JS) */
   .click-blur-spot {
     position: fixed;
     width: 16px;
@@ -396,7 +396,7 @@
     transform: translateX(-50%);
   }
 }
-/* Menu jezyka wjezdza z gory (otwiera sie w dol) */
+/* language menu slides in from the top (opens downward) */
 @keyframes lang-slide-in {
   from {
     opacity: 0;
@@ -423,15 +423,6 @@
   }
   100% {
     opacity: 0;
-  }
-}
-
-/* Na malych ekranach kolumna jezykow jest po lewej -> menu kotwiczy do lewej */
-@media (max-width: 560px) {
-  .lang-menu {
-    right: auto;
-    left: 0;
-    transform-origin: top left;
   }
 }
 

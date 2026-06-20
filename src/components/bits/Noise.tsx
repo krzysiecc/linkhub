@@ -8,7 +8,7 @@ interface NoiseProps {
   patternAlpha?: number;
 }
 
-// Animowane ziarno / grain - delikatna warstwa "filmowa".
+// animated grain - a subtle "film" layer.
 export default function Noise({
   patternSize = 250,
   patternScaleX = 1,

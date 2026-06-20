@@ -1,22 +1,24 @@
 import { motion } from "framer-motion";
 import Icon, { type IconName } from "./Icon";
 import { useI18n } from "../i18n";
+import { resolveHref, type LocalizedHref } from "../data/links";
 
 interface LinkCardProps {
   id: string;
-  href: string;
+  href: LocalizedHref;
   icon: IconName;
 }
 
-// Domyslnie widac tylko wyposrodkowana etykiete. Na hover / focus-visible
-// glowny tekst znika, a wjezdza ikonka (z lewej) i opis (z prawej) - patrz index.css.
+// by default only the centered label is visible. on hover / focus-visible
+// the main text fades out and the icon (left) and description (right) slide in - see index.css.
 export default function LinkCard({ id, href, icon }: LinkCardProps) {
-  const { t } = useI18n();
-  const isMail = href.startsWith("mailto:");
+  const { t, lang } = useI18n();
+  const url = resolveHref(href, lang);
+  const isMail = url.startsWith("mailto:");
   return (
     <motion.a
       className="link"
-      href={href}
+      href={url}
       target={isMail ? undefined : "_blank"}
       rel={isMail ? undefined : "noopener noreferrer"}
       whileTap={{ scale: 0.99 }}

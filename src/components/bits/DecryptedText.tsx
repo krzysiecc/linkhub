@@ -6,7 +6,7 @@ import {
   useCallback,
   type CSSProperties,
 } from "react";
-// Projekt uzywa framer-motion (nie pakietu "motion") - stad zmieniony import.
+// the project uses framer-motion (not the "motion" package) - hence the changed import.
 import { motion } from "framer-motion";
 
 type RevealDirection = "start" | "end" | "center";
@@ -240,7 +240,7 @@ export default function DecryptedText({
           return prevRevealed;
         }
 
-        // Non-Sequential
+        // non-sequential
         if (direction === "forward") {
           setDisplayText(shuffleText(text, prevRevealed));
           currentIteration++;
@@ -253,7 +253,7 @@ export default function DecryptedText({
           return prevRevealed;
         }
 
-        // Non-Sequential Reverse
+        // non-sequential reverse
         let currentSet = prevRevealed;
         if (currentSet.size === 0) {
           currentSet = fillAllIndices();

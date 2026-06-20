@@ -1,7 +1,7 @@
 import { useI18n } from "../i18n";
 
-// Karuzela (marquee) z tekstem monospace. Dwa identyczne kawalki +
-// przesuniecie o -50% daja bezszwowa petle.
+// marquee with monospace text. two identical chunks +
+// a -50% shift give a seamless loop.
 export default function Marquee() {
   const { t } = useI18n();
   const chunk = t("marquee").repeat(4);

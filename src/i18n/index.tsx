@@ -28,7 +28,7 @@ function readInitialLang(): Lang {
     const saved = localStorage.getItem(STORAGE_KEY);
     if (saved && isLang(saved)) return saved;
   } catch {
-    /* localStorage niedostepny */
+    /* localStorage unavailable */
   }
   return DEFAULT_LANG;
 }
@@ -53,7 +53,7 @@ export function I18nProvider({ children }: { children: ReactNode }) {
     try {
       localStorage.setItem(STORAGE_KEY, next);
     } catch {
-      /* ignoruj */
+      /* ignore */
     }
   }, []);
 

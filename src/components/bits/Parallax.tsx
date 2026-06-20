@@ -8,8 +8,8 @@ interface ParallaxProps {
   depth?: number;
 }
 
-// Delikatny paralaks tresci: lekko przesuwa sie za kursorem,
-// dajac wrazenie glebi. baseX trzyma stale przesuniecie "lekko w lewo".
+// subtle content parallax: drifts slightly with the cursor,
+// giving a sense of depth. baseX holds a constant "slightly to the left" offset.
 export default function Parallax({
   children,
   className,
